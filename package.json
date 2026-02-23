@@ -1,0 +1,14 @@
+{
+  "name": "layout-demo",
+  "version": "1.0.0",
+  "description": "2D bin packing webapp",
+  "scripts": {
+    "build": "terser js/app.js -o js/app.min.js -c -m",
+    "build:dist": "npm run build && node scripts/build-dist.js",
+    "deploy": "npm run build:dist && wrangler deploy"
+  },
+  "devDependencies": {
+    "terser": "^5.36.0",
+    "wrangler": "^3.91.0"
+  }
+}

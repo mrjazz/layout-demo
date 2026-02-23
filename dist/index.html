@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Backpacking Problem</title>
+  <style>
+    * { box-sizing: border-box; }
+    body {
+      font-family: 'Segoe UI', system-ui, sans-serif;
+      margin: 20px;
+      background: #1a1a2e;
+      color: #eee;
+    }
+    .config-panel {
+      display: flex;
+      gap: 12px;
+      align-items: center;
+      margin-bottom: 12px;
+      padding: 12px;
+      background: #16213e;
+      border-radius: 8px;
+    }
+    .config-panel label { font-weight: 500; }
+    .config-panel input {
+      width: 70px;
+      padding: 6px 10px;
+      border: 1px solid #0f3460;
+      border-radius: 4px;
+      background: #0f3460;
+      color: #eee;
+    }
+    .main-layout {
+      display: flex;
+      gap: 50px;
+      align-items: flex-start;
+    }
+    .elements-panel {
+      flex-shrink: 0;
+      width: 260px;
+      padding: 12px;
+      background: #16213e;
+      border-radius: 8px;
+      border: 1px solid #0f3460;
+    }
+    .elements-panel h3 {
+      margin: 0 0 12px 0;
+      font-size: 16px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .element-item {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 8px 10px;
+      margin-bottom: 8px;
+      background: #0f3460;
+      border-radius: 6px;
+      border: 2px solid transparent;
+      cursor: pointer;
+      transition: border-color 0.15s;
+    }
+    .element-item:hover { border-color: #334155; }
+    .element-item.active { border-color: #60a5fa; }
+    .element-item .el-num {
+      font-weight: 700;
+      font-size: 14px;
+      min-width: 20px;
+      color: #94a3b8;
+    }
+    .element-item .swatch {
+      width: 32px;
+      height: 32px;
+      border-radius: 4px;
+      flex-shrink: 0;
+      border: 1px solid rgba(255,255,255,0.2);
+    }
+    .element-item .dims {
+      display: flex;
+      gap: 6px;
+      align-items: center;
+      flex: 1;
+    }
+    .element-item .dims input {
+      width: 50px;
+      padding: 4px 6px;
+      border: 1px solid #334155;
+      border-radius: 4px;
+      background: #1a1a2e;
+      color: #eee;
+      font-size: 13px;
+    }
+    .element-item .dims span { font-size: 12px; color: #64748b; }
+    .element-item .btn-remove-item {
+      padding: 4px 10px;
+      font-size: 12px;
+      background: #f87171;
+      color: #0f172a;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      flex-shrink: 0;
+    }
+    .element-item .btn-remove-item:hover { background: #ef4444; }
+    .actions {
+      display: flex;
+      gap: 10px;
+      margin-bottom: 12px;
+    }
+    button {
+      padding: 8px 16px;
+      border: none;
+      border-radius: 6px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: transform 0.1s, box-shadow 0.1s;
+    }
+    button:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 2px 8px rgba(0,0,0,0.3);
+    }
+    button:active { transform: translateY(0); }
+    .btn-add { background: #4ade80; color: #0f172a; }
+    .btn-optimize { background: #60a5fa; color: #0f172a; }
+    .btn-apply { background: #a78bfa; color: #0f172a; }
+    .canvas-section {
+      flex: 1;
+      min-width: 0;
+    }
+    .canvas-wrap {
+      display: inline-block;
+      padding: 2px;
+      background: #0f3460;
+      border-radius: 8px;
+      box-shadow: inset 0 0 0 1px rgba(255,255,255,0.1);
+      max-width: 100%;
+      overflow: auto;
+    }
+    #canvas {
+      display: block;
+      background: #0f172a;
+      border-radius: 6px;
+      cursor: crosshair;
+    }
+    .status {
+      margin-top: 10px;
+      font-size: 14px;
+      color: #94a3b8;
+    }
+    .empty-elements { color: #64748b; font-size: 14px; padding: 20px 0; text-align: center; }
+  </style>
+</head>
+<body>
+  <div class="config-panel">
+    <label>Canvas Width:</label>
+    <input type="number" id="configWidth" value="500" min="100" max="1200">
+    <label>Height:</label>
+    <input type="number" id="configHeight" value="500" min="100" max="1200">
+    <button class="btn-apply" id="btnApply">Apply</button>
+  </div>
+
+  <div class="main-layout">
+    <div class="elements-panel">
+      <h3>
+        <span>Elements</span>
+        <button class="btn-add" id="btnAdd">+ Add</button>
+      </h3>
+      <div id="elementsList"></div>
+    </div>
+
+    <div class="canvas-section">
+      <div class="actions">
+        <button class="btn-optimize" id="btnOptimize">Optimize</button>
+      </div>
+      <div class="canvas-wrap">
+        <canvas id="canvas" width="500" height="500"></canvas>
+      </div>
+      <div class="status" id="status">Add elements in the panel, set width/height, then click Optimize to pack them on the canvas.</div>
+    </div>
+  </div>
+
+  <script src="js/app.min.js"></script>
+</body>
+</html>
